@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleBitPacker", "SimpleBitPacker\SimpleBitPacker.csproj", "{CBADC4BA-0559-47FB-9467-8F5F781715E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBADC4BA-0559-47FB-9467-8F5F781715E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBADC4BA-0559-47FB-9467-8F5F781715E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBADC4BA-0559-47FB-9467-8F5F781715E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBADC4BA-0559-47FB-9467-8F5F781715E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F793B97E-0F78-47F8-9BA6-0A5A620C0C05}
+	EndGlobalSection
+EndGlobal
