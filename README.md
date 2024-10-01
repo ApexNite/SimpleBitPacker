@@ -12,7 +12,7 @@ you can specify to only use 24 of the 32 bits, reducing packet size by ~0.25%**\
 **\*** Note: The compressed byte array may contain up to 7 wasted bits. For example, if you compress two 12 bit sized integers,
 the compressed byte array will be length 3 for a total of 24 bits with 2 wasted bits at the end of the last byte.
 ## Writing Numbers
-The `BitWriter` class contains three methods, `Write<T>(T value, int bits)`, `Write(bool value, int bits)` and `GetBytes()`, 
+The `BitWriter` class contains three methods, `Write<T>(T value, int bits)`, `Write(bool value)` and `GetBytes()`, 
 that are used to write individual bits from an input to create a new compressed byte array.
 ```csharp
 // Create a new BitWriter object
@@ -36,7 +36,7 @@ byte[] compressedBytes = bitWriter.GetBytes();
 ```
 
 ## Reading Numbers
-The `BitReader` class contains two methods, `Read<T>(int bits)` and `ReadBool(int bits)`, that read
+The `BitReader` class contains two methods, `Read<T>(int bits)` and `Read()`, that read
 individual bits from a compressed byte array and return their uncompressed value.
 
 ```csharp
@@ -54,7 +54,7 @@ long longValue = bitReader.Read<long>(54);
 ulong ulongValue = bitReader.Read<ulong>(54);
 
 // Read bool
-boolValue = bitReader.ReadBool();
+boolValue = bitReader.Read();
 ```
 
 ### Note:
