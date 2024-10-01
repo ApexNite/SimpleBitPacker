@@ -1,5 +1,5 @@
 # Simple Bit Packer
-A simple ~60 line C# implementation of bit packing compression.
+A simple C# implementation of bit packing compression.
 
 ## What is Bit Packing?
 Bit packing is widely used to compress data that follows a size range different than that of what bytes, shorts, ints, and longs
