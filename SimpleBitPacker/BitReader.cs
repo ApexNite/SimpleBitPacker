@@ -18,8 +18,6 @@ namespace SimpleBitPacker {
             return value;
         }
 
-        public float ReadFloat(int bits) => BitConverter.ToSingle(BitConverter.GetBytes(Read<int>(bits)));
-
         public bool ReadBool() => (bytes[offset / 8] & (1 << offset++ % 8)) != 0;
     }
 }

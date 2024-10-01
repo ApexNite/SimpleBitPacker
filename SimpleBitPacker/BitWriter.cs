@@ -10,8 +10,6 @@ namespace SimpleBitPacker {
                 WriteBit((value & (T.One << i)) != T.Zero);
         }
 
-        public void Write(float value, int bits) => Write(BitConverter.ToInt32(BitConverter.GetBytes(value)), bits);
-
         public void Write(bool value) => WriteBit(value);
 
         public byte[] GetBytes() => buffer.ToArray();
