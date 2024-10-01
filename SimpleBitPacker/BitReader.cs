@@ -18,6 +18,6 @@ namespace SimpleBitPacker {
             return value;
         }
 
-        public bool ReadBool() => (bytes[offset / 8] & (1 << offset++ % 8)) != 0;
+        public bool Read() => Read<int>(1) != 0;
     }
 }

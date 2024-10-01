@@ -6,22 +6,19 @@ namespace SimpleBitPacker {
         private int bitsInBuffer = 0;
 
         public void Write<T>(T value, int bits) where T : IBinaryInteger<T> {
-            for (int i = 0; i < bits; i++)
-                WriteBit((value & (T.One << i)) != T.Zero);
+            for (int i = 0; i < bits; i++) {
+                if (bitsInBuffer / 8 > buffer.Count - 1)
+                    buffer.Add(0);
+
+                if ((value & (T.One << i)) != T.Zero)
+                    buffer[buffer.Count - 1] |= (byte)(1 << bitsInBuffer % 8);
+
+                bitsInBuffer++;
+            }
         }
 
-        public void Write(bool value) => WriteBit(value);
+        public void Write(bool value) => Write(1, 1);
 
         public byte[] GetBytes() => buffer.ToArray();
-
-        private void WriteBit(bool bit) {
-            if (bitsInBuffer / 8 > buffer.Count - 1)
-                buffer.Add(0);
-
-            if (bit)
-                buffer[buffer.Count - 1] |= (byte)(1 << bitsInBuffer % 8);
-
-            bitsInBuffer++;
-        }
     }
 }
