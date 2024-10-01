@@ -7,8 +7,10 @@ usually allow by letting you explicitly state the number of bits needed to repre
 
 For example, if you need to transport an array of integers that will never be negative and will never exceed 10,000,000, you only need
 24 bits. Usually, this would require using multiple uints of 32 bits, where 8 bits will be completely wasted. But with bit packing,
-you can specify only to use 24 of the 32 bits, reducing packet size by ~0.25%.
+you can specify to only use 24 of the 32 bits, reducing packet size by ~0.25%**\***.  
 
+**\*** Note: The compressed byte array may contain up to 7 wasted bits. For example, if you compress two 12 bit sized integers,
+the compressed byte array will be length 3 for a total of 24 bits with 2 wasted bits at the end of the last byte.
 ## Writing Numbers
 The `BitWriter` class contains two methods, `Write<T>(T value, int bits)` and `Write(bool value, int bits)`, that write
 individual bits from an input to create a new compressed byte array. Use `GetBytes()` to get compressed bytes.
