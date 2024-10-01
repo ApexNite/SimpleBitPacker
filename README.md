@@ -58,6 +58,6 @@ boolValue = bitReader.ReadBool();
 ```
 
 ### Note:
-This project was made with minimal supplementary performance optimizations and a unique use case (BigInteger and IntPtr mostly)
-testing. This was a fun side project that fulfilled the requirements I needed. If you plan to use this in your project, be warned that
-it was **never intended for use in commercial applications** and should be used as a basis to build off of.
+This project was made with minimal supplementary performance optimizations and unique use case (BigInteger and IntPtr mostly)
+testing. This was a fun side project that has fulfilled the requirements I needed. If you plan to use this in your project, be warned
+that it was **never intended for use in commercial applications** and bugfixes are not guaranteed.
