@@ -46,8 +46,3 @@ ulong ulongValue = bitReader.Read<ulong>(54);
 // Read bool
 boolValue = bitReader.Read();
 ```
-
-### Note:
-This project was made with minimal supplementary performance optimizations and unique use case (BigInteger and IntPtr mostly)
-testing. This was a fun side project that has fulfilled the requirements I needed. If you plan to use this in your project, be warned
-that it was **never intended for use in commercial applications** and bugfixes are not guaranteed.
