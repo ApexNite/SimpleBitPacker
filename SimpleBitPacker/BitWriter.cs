@@ -17,7 +17,7 @@ namespace SimpleBitPacker {
             }
         }
 
-        public void Write(bool value) => Write(1, 1);
+        public void Write(bool value) => Write(value ? 1 : 0, 1);
 
         public byte[] GetBytes() => buffer.ToArray();
     }
