@@ -13,6 +13,16 @@ namespace SimpleBitPacker
             if (bits > (long)bytes.Length * 8 - _offset)
                 throw new EndOfStreamException();
 
+            if (bits == 1)
+            {
+                bool set = (bytes[_offset / 8] & (1 << (_offset++ % 8))) != 0;
+
+                if (!set)
+                    return T.Zero;
+
+                return T.IsNegative(T.CreateTruncating(-1)) ? T.CreateTruncating(-1) : T.One;
+            }
+
             T value = T.Zero;
             int read = 0;
             while (read < bits)
