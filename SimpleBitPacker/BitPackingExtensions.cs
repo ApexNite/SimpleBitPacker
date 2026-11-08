@@ -17,6 +17,7 @@ public static class BitPackingExtensions
             ulong nativeSpan = unchecked(ulong.CreateTruncating(max) - nativeMin);
             ulong nativeOffset = unchecked(ulong.CreateTruncating(value) - nativeMin);
             writer.Write(nativeOffset, 64 - BitOperations.LeadingZeroCount(nativeSpan));
+
             return;
         }
 
@@ -38,6 +39,7 @@ public static class BitPackingExtensions
             ulong nativeMin = ulong.CreateTruncating(min);
             ulong nativeSpan = unchecked(ulong.CreateTruncating(max) - nativeMin);
             ulong nativeOffset = reader.Read<ulong>(64 - BitOperations.LeadingZeroCount(nativeSpan));
+
             if (nativeOffset > nativeSpan)
                 throw new InvalidDataException();
 
