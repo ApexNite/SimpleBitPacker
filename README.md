@@ -29,11 +29,14 @@ byte[] compressedBytes = bitWriter.GetBytes();
 
 ## Reading Numbers
 
-The `BitReader` class contains two methods, `Read<T>(int bits)` and `Read()`, that read individual bits from a compressed byte array and return their uncompressed value.
+The `BitReader` methods `Read<T>(int bits)` and `Read()` read integers and bools from a compressed byte array. Use `Peek<T>(int bits)` or `Peek()` to check the next value without advancing the reader.
 
 ```csharp
 // Create a new BitReader object
 BitReader bitReader = new BitReader(compressedBytes);
+
+// Peek at the next integer without reading past it
+byte nextValue = bitReader.Peek<byte>(4);
 
 // Read integers
 byte byteValue = bitReader.Read<byte>(4);
@@ -46,6 +49,7 @@ long longValue = bitReader.Read<long>(54);
 ulong ulongValue = bitReader.Read<ulong>(54);
 
 // Read bool
+bool nextBool = bitReader.Peek();
 bool boolValue = bitReader.Read();
 ```
 

@@ -44,5 +44,20 @@ namespace SimpleBitPacker
         }
 
         public bool Read() => Read<int>(1) != 0;
+
+        public T Peek<T>(int bits) where T : IBinaryInteger<T>
+        {
+            int offset = _offset;
+            try
+            {
+                return Read<T>(bits);
+            }
+            finally
+            {
+                _offset = offset;
+            }
+        }
+
+        public bool Peek() => Peek<int>(1) != 0;
     }
 }
