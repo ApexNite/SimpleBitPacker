@@ -8,7 +8,8 @@ namespace SimpleBitPacker {
             T value = T.Zero;
 
             for (int i = 0; i < bits; i++)
-                value |= (T)Convert.ChangeType(((bytes[_offset / 8] & (1 << _offset++ % 8)) != 0 ? 1UL : 0UL) << i, typeof(T));
+                if ((bytes[_offset / 8] & (1 << _offset++ % 8)) != 0)
+                    value |= T.One << i;
 
             return value;
         }
