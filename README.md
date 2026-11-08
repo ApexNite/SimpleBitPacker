@@ -34,7 +34,7 @@ individual bits from a compressed byte array and return their uncompressed value
 BitReader bitReader = new BitReader(compressedBytes);
 
 // Read integers
-byte byteValue = bitReader.Read<byte>(4)
+byte byteValue = bitReader.Read<byte>(4);
 sbyte sbyteValue = bitReader.Read<sbyte>(4);
 short shortValue = bitReader.Read<short>(13);
 ushort ushortValue = bitReader.Read<ushort>(13);
@@ -44,5 +44,5 @@ long longValue = bitReader.Read<long>(54);
 ulong ulongValue = bitReader.Read<ulong>(54);
 
 // Read bool
-boolValue = bitReader.Read();
+bool boolValue = bitReader.Read();
 ```
