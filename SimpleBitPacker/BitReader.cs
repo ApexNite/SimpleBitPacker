@@ -11,6 +11,10 @@ namespace SimpleBitPacker {
                 if ((bytes[_offset / 8] & (1 << _offset++ % 8)) != 0)
                     value |= T.One << i;
 
+            if (bits > 0 && T.IsNegative(T.CreateTruncating(-1)) && !T.IsNegative(value) &&
+                (value & (T.One << (bits - 1))) != T.Zero)
+                value |= T.CreateTruncating(-1) << bits;
+
             return value;
         }
 
