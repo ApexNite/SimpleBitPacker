@@ -9,7 +9,7 @@ namespace SimpleBitPacker
 
         public void Write<T>(T value, int bits) where T : IBinaryInteger<T>
         {
-            ArgumentOutOfRangeException.ThrowIfNegative(bits, nameof(bits));
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bits, nameof(bits));
             ArgumentOutOfRangeException.ThrowIfGreaterThan(bits, int.MaxValue - _bitsInBuffer, nameof(bits));
 
             int written = 0;
