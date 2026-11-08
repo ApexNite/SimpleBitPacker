@@ -9,15 +9,22 @@ namespace SimpleBitPacker
 
         public void Write<T>(T value, int bits) where T : IBinaryInteger<T>
         {
-            for (int i = 0; i < bits; i++)
+            ArgumentOutOfRangeException.ThrowIfNegative(bits, nameof(bits));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bits, int.MaxValue - _bitsInBuffer, nameof(bits));
+
+            int written = 0;
+            while (written < bits)
             {
-                if (_bitsInBuffer / 8 > _buffer.Count - 1)
+                int shift = _bitsInBuffer % 8;
+                int take = Math.Min(8 - shift, bits - written);
+                int chunk = byte.CreateTruncating(value >> written) & ((1 << take) - 1);
+
+                if (_bitsInBuffer / 8 == _buffer.Count)
                     _buffer.Add(0);
 
-                if ((value & (T.One << i)) != T.Zero)
-                    _buffer[^1] |= (byte)(1 << _bitsInBuffer % 8);
-
-                _bitsInBuffer++;
+                _buffer[^1] |= (byte)(chunk << shift);
+                _bitsInBuffer += take;
+                written += take;
             }
         }
 

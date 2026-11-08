@@ -8,11 +8,23 @@ namespace SimpleBitPacker
 
         public T Read<T>(int bits) where T : IBinaryInteger<T>
         {
-            T value = T.Zero;
+            ArgumentOutOfRangeException.ThrowIfNegative(bits, nameof(bits));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bits, int.MaxValue - _offset, nameof(bits));
+            if (bits > (long)bytes.Length * 8 - _offset)
+                throw new EndOfStreamException();
 
-            for (int i = 0; i < bits; i++)
-                if ((bytes[_offset / 8] & (1 << _offset++ % 8)) != 0)
-                    value |= T.One << i;
+            T value = T.Zero;
+            int read = 0;
+            while (read < bits)
+            {
+                int shift = _offset % 8;
+                int take = Math.Min(8 - shift, bits - read);
+                int chunk = (bytes[_offset / 8] >> shift) & ((1 << take) - 1);
+
+                value |= T.CreateTruncating(chunk) << read;
+                _offset += take;
+                read += take;
+            }
 
             if (bits > 0 && T.IsNegative(T.CreateTruncating(-1)) && !T.IsNegative(value) &&
                 (value & (T.One << (bits - 1))) != T.Zero)
