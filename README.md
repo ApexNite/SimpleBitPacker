@@ -1,9 +1,11 @@
 # Simple Bit Packer
+
 A simple C# implementation of bit packing compression.
 
 ## Writing Numbers
-The `BitWriter` class contains three methods, `Write<T>(T value, int bits)`, `Write(bool value)` and `GetBytes()`, 
-that are used to write individual bits from an input to create a new compressed byte array.
+
+The `BitWriter` class contains three methods, `Write<T>(T value, int bits)`, `Write(bool value)` and `GetBytes()`, that are used to write individual bits from an input to create a new compressed byte array.
+
 ```csharp
 // Create a new BitWriter object
 BitWriter bitWriter = new BitWriter();
@@ -26,8 +28,8 @@ byte[] compressedBytes = bitWriter.GetBytes();
 ```
 
 ## Reading Numbers
-The `BitReader` class contains two methods, `Read<T>(int bits)` and `Read()`, that read
-individual bits from a compressed byte array and return their uncompressed value.
+
+The `BitReader` class contains two methods, `Read<T>(int bits)` and `Read()`, that read individual bits from a compressed byte array and return their uncompressed value.
 
 ```csharp
 // Create a new BitReader object
@@ -45,4 +47,18 @@ ulong ulongValue = bitReader.Read<ulong>(54);
 
 // Read bool
 bool boolValue = bitReader.Read();
+```
+
+## Range Packing
+
+The `WriteRange<T>(value, min, max)` and `ReadRange<T>(min, max)` extension methods write and read integers within an inclusive range without specifying a bit count. Use the same range when writing and reading.
+
+```csharp
+// Write an integer between 0 and 100
+BitWriter bitWriter = new BitWriter();
+bitWriter.WriteRange<int>(64, 0, 100);
+
+// Read using the same range
+BitReader bitReader = new BitReader(bitWriter.GetBytes());
+int value = bitReader.ReadRange<int>(0, 100);
 ```
