@@ -2,8 +2,16 @@ using System.Numerics;
 
 namespace SimpleBitPacker;
 
+/// <summary>Packs and reads integers using inclusive ranges.</summary>
 public static class BitPackingExtensions
 {
+    /// <summary>Writes an integer within an inclusive range without specifying a bit count.</summary>
+    /// <param name="writer">The writer to use.</param>
+    /// <param name="value">The integer to write.</param>
+    /// <param name="min">The inclusive minimum.</param>
+    /// <param name="max">The inclusive maximum, greater than the minimum.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The range is invalid or the value is outside it.</exception>
+    /// <exception cref="ArgumentNullException">The writer is null.</exception>
     public static void WriteRange<T>(this BitWriter writer, T value, T min, T max) where T : IBinaryInteger<T>
     {
         ArgumentNullException.ThrowIfNull(writer);
@@ -30,6 +38,14 @@ public static class BitPackingExtensions
         writer.Write(offset, bits);
     }
 
+    /// <summary>Reads an integer using the same inclusive range used when writing.</summary>
+    /// <param name="reader">The reader to use.</param>
+    /// <param name="min">The inclusive minimum.</param>
+    /// <param name="max">The inclusive maximum, greater than the minimum.</param>
+    /// <exception cref="ArgumentOutOfRangeException">The range is invalid.</exception>
+    /// <exception cref="InvalidDataException">The encoded value is outside the range.</exception>
+    /// <exception cref="EndOfStreamException">Not enough bits remain.</exception>
+    /// <exception cref="ArgumentNullException">The reader is null.</exception>
     public static T ReadRange<T>(this BitReader reader, T min, T max) where T : IBinaryInteger<T>
     {
         ArgumentNullException.ThrowIfNull(reader);

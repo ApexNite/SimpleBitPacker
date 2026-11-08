@@ -2,11 +2,18 @@
 
 namespace SimpleBitPacker
 {
+    /// <summary>Reads packed integers and booleans from a byte array.</summary>
+    /// <param name="bytes">The packed data to read.</param>
+    /// <exception cref="ArgumentNullException">The byte array is null.</exception>
     public class BitReader(byte[] bytes)
     {
         private readonly byte[] _bytes = bytes ?? throw new ArgumentNullException(nameof(bytes));
         private int _offset = 0;
 
+        /// <summary>Reads the next integer.</summary>
+        /// <param name="bits">A positive bit count. For fixed-width types, use no more than the type's width.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The bit count is not positive, exceeds the type's width, or would overflow the total bit offset.</exception>
+        /// <exception cref="EndOfStreamException">Not enough bits remain.</exception>
         public T Read<T>(int bits) where T : IBinaryInteger<T>
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bits, nameof(bits));
@@ -45,8 +52,14 @@ namespace SimpleBitPacker
             return value;
         }
 
+        /// <summary>Reads the next bit as a boolean.</summary>
+        /// <exception cref="EndOfStreamException">No bits remain.</exception>
         public bool Read() => Read<int>(1) != 0;
 
+        /// <summary>Returns the next integer without advancing the reader.</summary>
+        /// <param name="bits">A positive bit count. For fixed-width types, use no more than the type's width.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The bit count is not positive, exceeds the type's width, or would overflow the total bit offset.</exception>
+        /// <exception cref="EndOfStreamException">Not enough bits remain.</exception>
         public T Peek<T>(int bits) where T : IBinaryInteger<T>
         {
             int offset = _offset;
@@ -60,6 +73,8 @@ namespace SimpleBitPacker
             }
         }
 
+        /// <summary>Returns the next boolean without advancing the reader.</summary>
+        /// <exception cref="EndOfStreamException">No bits remain.</exception>
         public bool Peek() => Peek<int>(1) != 0;
     }
 }
