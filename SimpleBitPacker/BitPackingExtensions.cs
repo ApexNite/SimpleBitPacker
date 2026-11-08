@@ -6,6 +6,7 @@ public static class BitPackingExtensions
 {
     public static void WriteRange<T>(this BitWriter writer, T value, T min, T max) where T : IBinaryInteger<T>
     {
+        ArgumentNullException.ThrowIfNull(writer);
         ArgumentOutOfRangeException.ThrowIfLessThan(max, min);
         ArgumentOutOfRangeException.ThrowIfEqual(max, min);
         ArgumentOutOfRangeException.ThrowIfLessThan(value, min);
@@ -31,6 +32,7 @@ public static class BitPackingExtensions
 
     public static T ReadRange<T>(this BitReader reader, T min, T max) where T : IBinaryInteger<T>
     {
+        ArgumentNullException.ThrowIfNull(reader);
         ArgumentOutOfRangeException.ThrowIfLessThan(max, min);
         ArgumentOutOfRangeException.ThrowIfEqual(max, min);
 
