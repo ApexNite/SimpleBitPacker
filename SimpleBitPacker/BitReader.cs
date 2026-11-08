@@ -4,18 +4,20 @@ namespace SimpleBitPacker
 {
     public class BitReader(byte[] bytes)
     {
+        private readonly byte[] _bytes = bytes ?? throw new ArgumentNullException(nameof(bytes));
         private int _offset = 0;
 
         public T Read<T>(int bits) where T : IBinaryInteger<T>
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bits, nameof(bits));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(bits, IntegerBitWidth<T>.Value, nameof(bits));
             ArgumentOutOfRangeException.ThrowIfGreaterThan(bits, int.MaxValue - _offset, nameof(bits));
-            if (bits > (long)bytes.Length * 8 - _offset)
+            if (bits > (long)_bytes.Length * 8 - _offset)
                 throw new EndOfStreamException();
 
             if (bits == 1)
             {
-                bool set = (bytes[_offset / 8] & (1 << (_offset++ % 8))) != 0;
+                bool set = (_bytes[_offset / 8] & (1 << (_offset++ % 8))) != 0;
 
                 if (!set)
                     return T.Zero;
@@ -29,7 +31,7 @@ namespace SimpleBitPacker
             {
                 int shift = _offset % 8;
                 int take = Math.Min(8 - shift, bits - read);
-                int chunk = (bytes[_offset / 8] >> shift) & ((1 << take) - 1);
+                int chunk = (_bytes[_offset / 8] >> shift) & ((1 << take) - 1);
 
                 value |= T.CreateTruncating(chunk) << read;
                 _offset += take;
